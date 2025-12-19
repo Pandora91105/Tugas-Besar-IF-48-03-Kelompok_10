@@ -8,7 +8,7 @@ void createListSales(listSales &L){
     L.first = nullptr;
 }
 
-adrSales createElmSales(listSales &L, string nama, string kode, int penjualan ){
+adrSales createElmSales(string nama, string kode, int penjualan ){
     adrSales p = new elmSales;
     p->info.Nama = nama;
     p->info.penjualan = penjualan;
@@ -18,7 +18,7 @@ adrSales createElmSales(listSales &L, string nama, string kode, int penjualan ){
     return p;
 }
 
-void insertFirstSales(adrMobil p, adrSales q){
+void insertFirstSales(adrMobil &p, adrSales q){
     if(p ->firstSales == nullptr){
         p ->firstSales = q;
     }else {
@@ -28,7 +28,7 @@ void insertFirstSales(adrMobil p, adrSales q){
 }
 
 
-void insertLastSales(adrMobil p, adrSales q){
+void insertLastSales(adrMobil &p, adrSales q){
     if (p->firstSales == nullptr){
         p->firstSales = q;
     }else{
@@ -40,7 +40,7 @@ void insertLastSales(adrMobil p, adrSales q){
     }
 }
 
-void insertAfterSales(adrMobil p, adrSales q, adrSales prec){
+void insertAfterSales(adrMobil &p, adrSales q, adrSales prec){
     if (p->firstSales == nullptr){
         p->firstSales = q;
     }else if (p->firstSales->next == nullptr){
@@ -51,7 +51,7 @@ void insertAfterSales(adrMobil p, adrSales q, adrSales prec){
     }
 }
 
-void deleteFirstSales(adrMobil p, adrSales q){
+void deleteFirstSales(adrMobil &p, adrSales q){
     if (p->firstSales == nullptr){
         cout << "Sales Kosong";
     }else if (p->firstSales->next == nullptr){
@@ -63,7 +63,7 @@ void deleteFirstSales(adrMobil p, adrSales q){
     }
 }
 
-void deleteLastSales(adrMobil p, adrSales q){
+void deleteLastSales(adrMobil &p, adrSales q){
     if (p->firstSales == nullptr){
         cout << "Sales kosong";
     }else if (p->firstSales->next == nullptr){
@@ -79,7 +79,7 @@ void deleteLastSales(adrMobil p, adrSales q){
     }
 }
 
-void deleteAfterSales(adrMobil p, adrSales q, adrSales prec){
+void deleteAfterSales(adrMobil &p, adrSales q, adrSales prec){
     if (p->firstSales == nullptr){
         cout << "Sales Kosong";
     }else if (p->firstSales->next == nullptr){
@@ -108,12 +108,32 @@ void viewSales(listMobil L){
         cout << p ->info.warna << endl;
         adrSales q = p->firstSales;
         while (q != nullptr){
-            cout << "Nama sales : " << q->info.Nama << endl;
-            cout << "kode sales : " << q->info.kode << endl;
-            cout << "Performa : " << q->info.penjualan << " penjualan" << endl;
+            cout << "==================================================";
+            cout << "|| Nama sales : " << q->info.Nama << " ||" << endl;
+            cout << "|| kode sales : " << q->info.kode << " ||" << endl;
+            cout << "|| Performa : " << q->info.penjualan << " penjualan" << " ||"<<endl;
             q = q->next;
         }
         p = p->next;
     }
+}
 
+void performaSales(listSales sales, listMobil mobil, string kode){
+    adrMobil y = mobil.first;
+    adrSales p;
+    int total = 0;
+    int sum = 0;
+    while (y != nullptr){
+        p = y->firstSales;
+        while (p != nullptr){
+            if (p->info.kode == kode){
+                total++;
+            }
+            p = p->next;
+        }
+        cout << "Total " << y->info.Merk << "Terjual : " << total << endl;
+        sum = sum + total;
+        y = y->next;
+    }
+    cout << "Total penjualan sales dengan kode " << kode << " : " << sum << endl;
 }
